@@ -1,1 +1,53 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="description" content="TaskFlow interactive full-stack CRUD student task manager"><title>TaskFlow | Interactive Student Task Manager</title><link rel="stylesheet" href="style.css"></head><body><div class="background-shape shape-one"></div><div class="background-shape shape-two"></div><main class="container"><header class="hero"><div><span class="eyebrow">FULL-STACK CRUD PROJECT</span><h1>Task<span>Flow</span></h1><p>Plan, track and complete your academic work from one interactive dashboard.</p></div><div class="hero-actions"><button id="themeToggle" class="theme-button" type="button">☾ <span>Theme</span></button><div class="db-badge"><span class="status-dot"></span>Database Connected</div></div></header><section class="stats"><button class="stat-card" data-filter="All" type="button"><span class="stat-icon">▦</span><span class="stat-label">Total Tasks</span><strong id="totalCount">0</strong><small>All your work</small></button><button class="stat-card" data-filter="Pending" type="button"><span class="stat-icon">◷</span><span class="stat-label">Pending</span><strong id="pendingCount">0</strong><small>Waiting to start</small></button><button class="stat-card" data-filter="In Progress" type="button"><span class="stat-icon">↗</span><span class="stat-label">In Progress</span><strong id="progressCount">0</strong><small>Currently working</small></button><button class="stat-card" data-filter="Completed" type="button"><span class="stat-icon">✓</span><span class="stat-label">Completed</span><strong id="completedCount">0</strong><small>Great work!</small></button></section><section class="overview panel"><div><span class="section-kicker">PRODUCTIVITY OVERVIEW</span><h2 id="progressTitle">Let's get started 🚀</h2><p id="progressText">Add your first task and build your progress.</p></div><div class="progress-wrap"><div class="progress-meta"><span>Completion progress</span><strong id="completionPercent">0%</strong></div><div class="progress-track"><div id="completionBar" class="progress-bar"></div></div></div><button id="quickAdd" class="quick-button" type="button">＋ New Task</button></section><section class="workspace"><aside class="panel form-panel" id="formPanel"><div class="panel-heading"><div><span class="section-kicker">CREATE / UPDATE</span><h2 id="formHeading">Add a Task</h2></div><button id="cancelEdit" class="icon-button hidden" type="button">×</button></div><form id="taskForm"><label for="title">Task title</label><input id="title" maxlength="120" placeholder="e.g. Complete DBMS assignment" required><label for="description">Description</label><textarea id="description" maxlength="1000" rows="5" placeholder="Add notes or details..."></textarea><label for="status">Status</label><select id="status"><option>Pending</option><option>In Progress</option><option>Completed</option></select><button id="submitButton" class="primary-button" type="submit"><span>＋</span> Add Task</button></form><p id="formMessage" class="form-message"></p></aside><section class="panel tasks-panel"><div class="panel-heading"><div><span class="section-kicker">YOUR WORKSPACE</span><h2>Tasks</h2></div><span id="taskCountLabel" class="count-label">0 tasks</span></div><div class="toolbar"><div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search tasks..." aria-label="Search tasks"><button id="clearSearch" class="clear-search hidden" type="button">×</button></div><select id="filterStatus"><option value="All">All statuses</option><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option></select></div><div class="active-filter hidden" id="activeFilter"><span>Showing: <strong id="activeFilterText"></strong></span><button id="clearFilter" type="button">Clear filter ×</button></div><div id="loading" class="state-box">Loading your tasks...</div><div id="taskList" class="task-list"></div><div id="emptyState" class="state-box hidden"><div class="empty-icon">✓</div><h3>No tasks found</h3><p>Create your first task or change the search/filter.</p></div></section></section><footer><span>Built with HTML, CSS, JavaScript, Express & SQLite</span><span>CRUD • Database • Responsive UI</span></footer></main><div id="toast" class="toast"></div><script src="script.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="TaskFlow interactive full-stack CRUD student task manager">
+<title>TaskFlow | Interactive Student Task Manager
+</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="background-shape shape-one">
+</div>
+<div class="background-shape shape-two">
+</div>
+<main class="container">
+<header class="hero">
+<div>
+<span class="eyebrow">FULL-STACK CRUD PROJECT</span>
+<h1>Task<span>Flow</span></h1>
+<p>Plan, track and complete your academic work from one interactive dashboard.</p>
+</div>
+<div class="hero-actions">
+<button id="themeToggle" class="theme-button" type="button">☾ <span>Theme</span>
+</button>
+<div class="db-badge"><span class="status-dot"></span>Database Connected</div>
+</div>
+</header>
+<section class="stats">
+<button class="stat-card" data-filter="All" type="button"><span class="stat-icon">▦</span>
+<span class="stat-label">Total Tasks
+</span><strong id="totalCount">0</strong>
+<small>All your work</small></button><button class="stat-card" data-filter="Pending" type="button">
+<span class="stat-icon">◷</span><span class="stat-label">Pending</span>
+<strong id="pendingCount">0</strong>
+<small>Waiting to start</small></button><button class="stat-card" data-filter="In Progress" type="button">
+<span class="stat-icon">↗</span><span class="stat-label">In Progress</span><strong id="progressCount">0</strong><small>Currently working</small></button>
+<button class="stat-card" data-filter="Completed" type="button"><span class="stat-icon">✓</span><span class="stat-label">Completed</span><strong id="completedCount">0</strong>
+<small>Great work!</small></button></section><section class="overview panel"><div><span class="section-kicker">PRODUCTIVITY OVERVIEW</span><h2 id="progressTitle">Let's get started 🚀</h2><p id="progressText">Add your first task and build your progress.</p></div><div class="progress-wrap"><div class="progress-meta"><span>Completion progress</span><strong id="completionPercent">0%</strong></div><div class="progress-track"><div id="completionBar" class="progress-bar"></div></div></div><button id="quickAdd" class="quick-button" type="button">＋ New Task</button></section><section class="workspace"><aside class="panel form-panel" id="formPanel"><div class="panel-heading"><div><span class="section-kicker">CREATE / UPDATE</span><h2 id="formHeading">Add a Task</h2></div><button id="cancelEdit" class="icon-button hidden" type="button">×</button></div><form id="taskForm"><label for="title">Task title</label><input id="title" maxlength="120" placeholder="e.g. Complete DBMS assignment" required><label for="description">Description</label><textarea id="description" maxlength="1000" rows="5" placeholder="Add notes or details..."></textarea><label for="status">Status</label><select id="status"><option>Pending</option><option>In Progress</option><option>Completed</option></select><button id="submitButton" class="primary-button" type="submit"><span>＋</span> Add Task</button></form><p id="formMessage" class="form-message"></p></aside><section class="panel tasks-panel"><div class="panel-heading"><div><span class="section-kicker">YOUR WORKSPACE</span><h2>Tasks</h2></div><span id="taskCountLabel" class="count-label">0 tasks</span></div><div class="toolbar"><div class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search tasks..." aria-label="Search tasks"><button id="clearSearch" class="clear-search hidden" type="button">×</button></div><select id="filterStatus"><option value="All">All statuses</option><option value="Pending">Pending</option><option value="In Progress">In Progress</option><option value="Completed">Completed</option></select></div><div class="active-filter hidden" id="activeFilter"><span>Showing: <strong id="activeFilterText"></strong></span><button id="clearFilter" type="button">Clear filter ×</button></div><div id="loading" class="state-box">Loading your tasks...</div><div id="taskList" class="task-list"></div><div id="emptyState" class="state-box hidden"><div class="empty-icon">✓</div><h3>No tasks found</h3>
+<p>Create your first task or change the search/filter.</p>
+</div>
+</section>
+</section>
+<footer>
+<span>Built with HTML, CSS, JavaScript, Express & SQLite</span>
+<span>CRUD • Database • Responsive UI</span>
+</footer>
+</main>
+<div id="toast" class="toast"></div>
+<script src="script.js">
+</script>
+</body>
+</html>
